@@ -1,7 +1,65 @@
-﻿
+﻿@using Company.G02.PL.Controllers
+@model IEnumerable<Department>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "index";
 }
 
-<h1>All Department</h1>
+<h1>
+    All Departments
+</h1>
+<br/>
+<br/>
 
+<a asp-action="Create" asp-controller="DepartmentControllers" class="btn btn-primary">Create Department</a>
+
+@if (Model.Count() > 0)
+{
+    <div class="container mt-5">
+        <h2 class="mb-4">Department Table</h2>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center bg-primary text-white">ID</th>
+
+                    <th class="text-center bg-primary text-white">Code</th>
+                    <th class="text-center bg-primary text-white">Name</th>
+                    <th class="text-center bg-primary text-white">Date Of Creation</th>
+                    <th class="text-center bg-primary text-white">Details</th>
+                    <th class="text-center bg-primary text-white">Update</th>
+                    <th class="text-center bg-primary text-white">Delete</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Code</td>
+                        <td>@item.Name</td>
+                        <td>@item.CreateAt</td>
+                        <td>
+                            <a asp-action="Details" class="btn btn-warning">Details</a>
+                        </td>
+
+                        <td>
+                            <a asp-action="Update" class="btn btn-success">Update</a>
+                        </td>
+
+                        <td>
+                            <a asp-action="Delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div>
+        <h4 class="mt-4 alert alert-danger">
+            There Are No Department
+        </h4>
+    </div>
+}
