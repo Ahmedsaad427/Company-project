@@ -13,7 +13,7 @@ namespace Company.G02.DAL.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.Property(E => E.Salary).HasColumnType("decimal(18,2)");
+            builder.Property(E => E.Id).UseIdentityColumn(10, 10);
         }
     }
 }
