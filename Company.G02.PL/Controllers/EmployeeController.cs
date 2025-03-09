@@ -97,23 +97,37 @@ namespace Company.G02.PL.Controllers
         // Edit (POST)
         [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Employee employee)
+        public IActionResult Edit([FromRoute]int id, CreateEmployeeDto model)
         {
-            if (id != employee.Id)
-            {
-                return BadRequest("ID mismatch.");
-            }
+          
 
             if (ModelState.IsValid)
             {
+                var employee = new Employee
+                {
+                    Id = id,
+                    Name = model.Name,
+                    Address = model.Address,
+                    Age = model.Age ?? 0,
+                    CreateAt = model.CreateAt,
+                    HiringTime = model.HiringTime,
+                    Email = model.Email,
+                    IsActive = model.IsActive,
+                    IsDelete = model.IsDelete,
+                    Phone = model.Phone,
+                    Salary = model.Salary
+                };
+
                 var count = _employeeRepository.Update(employee);
                 if (count > 0)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index)); // Redirect to index if successful
                 }
+
                 ModelState.AddModelError("", "Failed to update employee.");
             }
-            return View(employee);
+
+            return View(model); // Return the form with validation errors if needed
         }
 
         // Delete (GET)
