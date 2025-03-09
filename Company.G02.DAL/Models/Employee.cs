@@ -2,7 +2,7 @@
 
 public class Employee : BaseEntity
 {
-    public int Id { get; set; } // This should match the identity column
+    public int Id { get; set; } // Add this!
     public string Name { get; set; }
     public string Address { get; set; }
     public int Age { get; set; }
