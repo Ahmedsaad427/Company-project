@@ -1,0 +1,79 @@
+﻿@using Company.G02.PL.Controllers
+@model IEnumerable<Employee>
+
+@{
+    ViewData["Title"] = "Employee List";
+}
+
+<h1>All Employees</h1>
+<br />
+<br />
+
+<a asp-action="Create" asp-controller="Employee" class="btn btn-primary">Create Employee</a>
+
+@if (Model.Any())
+{
+    <div class="container mt-5">
+        <h2 class="mb-4">Employee Table</h2>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center bg-primary text-white">ID</th>
+                    <th class="text-center bg-primary text-white">Name</th>
+                    <th class="text-center bg-primary text-white">Age</th>
+                    <th class="text-center bg-primary text-white">Email</th>
+                    <th class="text-center bg-primary text-white">Phone</th>
+                    <th class="text-center bg-primary text-white">Address</th>
+                    <th class="text-center bg-primary text-white">Salary</th>
+                    <th class="text-center bg-primary text-white">Hiring Date</th>
+                    <th class="text-center bg-primary text-white">Status</th>
+                    <th class="text-center bg-primary text-white">Details</th>
+                    <th class="text-center bg-primary text-white">Update</th>
+                    <th class="text-center bg-primary text-white">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Age</td>
+                        <td>@item.Email</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Address</td>
+                        <td>@item.Salary.ToString("C")</td>
+                        <td>@item.HiringTime.ToString("MM/dd/yyyy")</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Employee" asp-route-id="@item.Id" class="btn btn-warning">Details</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Employee" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Update</a>
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-controller="Employee" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div>
+        <h4 class="mt-4 alert alert-danger">
+            There Are No Employees
+        </h4>
+    </div>
+}

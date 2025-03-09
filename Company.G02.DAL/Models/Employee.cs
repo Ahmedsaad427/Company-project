@@ -1,31 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Company.G02.DAL.Models;
 
-namespace Company.G02.DAL.Models
+public class Employee : BaseEntity
 {
-    public class Employee
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int? Age { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-
-        public string Phone { get; set; }
-
-        public decimal Salary { get; set; }
-
-        public bool IsActive { get; set; }
-        public bool IsDelete { get; set; }
-        public DateTime HiringTime { get; set; }
-        public DateTime CreateAt { get; set; }
-
-
-
-
-
-    }
+    public int Id { get; set; } // This should match the identity column
+    public string Name { get; set; }
+    public string Address { get; set; }
+    public int Age { get; set; }
+    public DateTime CreateAt { get; set; }
+    public DateTime HiringTime { get; set; }
+    public string Email { get; set; }
+    public bool IsActive { get; set; }
+    public bool IsDelete { get; set; }
+    public string Phone { get; set; }
+    public decimal Salary { get; set; }
 }

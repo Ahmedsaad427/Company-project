@@ -4,9 +4,9 @@ using Company.G02.DAL.Models;
 
 namespace Company.G02.BLL.Repos
 {
-    public class DepartmentRepository : GenericRepository<Department>, IDepartmentRepository
+    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
     {
-        public DepartmentRepository(CompanyDbContext context) : base(context)
+        public EmployeeRepository(CompanyDbContext context) : base(context)
         {
         }
     }

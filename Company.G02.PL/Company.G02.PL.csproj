@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\DepartmentControllers\**" />
+    <Content Remove="Views\DepartmentControllers\**" />
+    <EmbeddedResource Remove="Views\DepartmentControllers\**" />
+    <None Remove="Views\DepartmentControllers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Company.G02.BLL\Company.G02.BLL.csproj" />
   </ItemGroup>
 
@@ -16,10 +23,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\DepartmentControllers\" />
   </ItemGroup>
 
 </Project>
