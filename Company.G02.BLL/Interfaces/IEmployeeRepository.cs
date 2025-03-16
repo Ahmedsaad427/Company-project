@@ -14,5 +14,6 @@ namespace Company.G02.BLL.Interfaces
         //int Add(Employee model);
         //int Delete(Employee model);
         //int Update(Employee model);
+
     }
 }

@@ -6,7 +6,7 @@ namespace Company.G02.PL.Dtos
     public class CreateEmployeeDto
     {
         [Required(ErrorMessage = "Name is required")]
-        public string Name { get; set; }
+        public string EmpName { get; set; }
 
         [Required(ErrorMessage = "Age is required")]
         [Range(18, 65, ErrorMessage = "Age must be between 18 and 65")]

@@ -1,7 +1,9 @@
-﻿using Company.G02.BLL.Interfaces;
+﻿using AutoMapper;
+using Company.G02.BLL.Interfaces;
 using Company.G02.DAL.Models;
 using Company.G02.PL.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Company.G02.PL.Controllers
 {
@@ -9,10 +11,12 @@ namespace Company.G02.PL.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMapper mapper;
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, IMapper mapper)
         {
             _employeeRepository = employeeRepository;
+            this.mapper = mapper;
         }
 
         // Index action to list all employees
@@ -36,21 +40,22 @@ namespace Company.G02.PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                var employee = new Employee
-                {
-                    // Don't set Id — let the database handle it!
-                    Name = model.Name,
-                    Address = model.Address,
-                    Age = model.Age??0,
-                    CreateAt = model.CreateAt,
-                    HiringTime = model.HiringTime,
-                    Email = model.Email,
-                    IsActive = model.IsActive,
-                    IsDelete = model.IsDelete,
-                    Phone = model.Phone,
-                    Salary = model.Salary
-                };
-
+                // Manual Mapping 
+                //var employee = new Employee
+                //{
+                //    // Don't set Id — let the database handle it!
+                //    //Name = model.Name,
+                //    //Address = model.Address,
+                //    //Age = model.Age??0,
+                //    //CreateAt = model.CreateAt,
+                //    //HiringTime = model.HiringTime,
+                //    //Email = model.Email,
+                //    //IsActive = model.IsActive,
+                //    //IsDelete = model.IsDelete,
+                //    //Phone = model.Phone,
+                //    //Salary = model.Salary
+                //};
+              var employee= mapper.Map<Employee>(model);
                 var count = _employeeRepository.Add(employee);
                 if (count > 0)
                 {
@@ -77,7 +82,6 @@ namespace Company.G02.PL.Controllers
             {
                 return NotFound(new { StatusCode = 404, message = $"Employee with ID {id} not found" });
             }
-
             return View(employee);
         }
 
@@ -91,30 +95,38 @@ namespace Company.G02.PL.Controllers
                 return NotFound(new { StatusCode = 404, message = $"Employee with ID {id} not found" });
             }
 
-            return View(employee);
+            var dto = mapper.Map<CreateEmployeeDto>(employee);
+
+            return View(dto);
         }
 
         // Edit (POST)
         [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Employee employee)
+        public IActionResult Edit(int id, CreateEmployeeDto model)
         {
-            if (id != employee.Id)
+            if (id != model.Id) // Assuming CreateEmployeeDto has an Id property
             {
                 return BadRequest("ID mismatch.");
             }
 
             if (ModelState.IsValid)
             {
+                var employee = mapper.Map<Employee>(model);
+                employee.Id = id; // Ensure the ID remains unchanged
+
                 var count = _employeeRepository.Update(employee);
                 if (count > 0)
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
                 ModelState.AddModelError("", "Failed to update employee.");
             }
-            return View(employee);
+
+            return View(model);
         }
+
 
         // Delete (GET)
         [HttpGet("Delete/{id}")]
@@ -142,6 +154,9 @@ namespace Company.G02.PL.Controllers
             _employeeRepository.Delete(employee);
             return RedirectToAction("Index");
         }
+
+       
+
 
 
     }
