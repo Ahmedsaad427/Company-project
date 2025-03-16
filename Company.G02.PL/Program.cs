@@ -26,6 +26,11 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+// Life Time
+//builder.Services.AddScoped();    // Create Object Life Time Per Request - UnReachable Object
+//builder.Services.AddTransient(); // Create Object Life Time Per Operation
+//builder.Services.AddSingleton(); // Create Object Life Timer Per App
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

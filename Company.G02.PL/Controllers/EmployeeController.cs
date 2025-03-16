@@ -85,35 +85,24 @@ namespace Company.G02.PL.Controllers
             return View(employee);
         }
 
-        // Edit (GET)
-        [HttpGet("Edit/{id}")]
-        public IActionResult Edit(int id)
+        public IActionResult Edit([FromRoute] int id, CreateEmployeeDto model)
         {
-            var employee = _employeeRepository.Get(id);
-            if (employee == null)
-            {
-                return NotFound(new { StatusCode = 404, message = $"Employee with ID {id} not found" });
-            }
-
-            var dto = mapper.Map<CreateEmployeeDto>(employee);
-
-            return View(dto);
-        }
-
-        // Edit (POST)
-        [HttpPost("Edit/{id}")]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, CreateEmployeeDto model)
-        {
-            if (id != model.Id) // Assuming CreateEmployeeDto has an Id property
-            {
-                return BadRequest("ID mismatch.");
-            }
-
             if (ModelState.IsValid)
             {
-                var employee = mapper.Map<Employee>(model);
-                employee.Id = id; // Ensure the ID remains unchanged
+                var employee = new Employee
+                {
+                    Id = id,
+                    Name = model.EmpName,
+                    Address = model.Address,
+                    Age = model.Age ?? 0,
+                    CreateAt = model.CreateAt,
+                    HiringTime = model.HiringTime,
+                    Email = model.Email,
+                    IsActive = model.IsActive,
+                    IsDelete = model.IsDelete,
+                    Phone = model.Phone,
+                    Salary = model.Salary
+                };
 
                 var count = _employeeRepository.Update(employee);
                 if (count > 0)
