@@ -1,4 +1,5 @@
 ﻿using Company.G02.DAL.Models;
+using System.ComponentModel;
 
 public class Employee : BaseEntity
 {
@@ -13,4 +14,5 @@ public class Employee : BaseEntity
     public bool IsDelete { get; set; }
     public string Phone { get; set; }
     public decimal Salary { get; set; }
+ 
 }

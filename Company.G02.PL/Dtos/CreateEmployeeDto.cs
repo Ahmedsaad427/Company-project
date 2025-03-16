@@ -36,6 +36,7 @@ namespace Company.G02.PL.Dtos
 
         [DisplayName("Hiring Date")]
         public DateTime HiringTime { get; set; }
+        public int Id { get; set; }  // Add this property
 
         [DisplayName("Date of Creation")]
         public DateTime CreateAt { get; set; }
